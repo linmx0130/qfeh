@@ -20,14 +20,20 @@
 #include <QDir>
 
 LocalDirIterator::LocalDirIterator(QObject *parent, const QString& path): QObject(parent), position(0){
-    QDir dir(path);
-    dir.setFilter(QDir::Files);
-    qDebug("reading path: %s\n", path.toStdString().c_str());
-    auto files = dir.entryInfoList().toVector();
-    for (const QFileInfo& finfo: files) {
-        QString path = finfo.absoluteFilePath();
-        if (path.endsWith(".jpg", Qt::CaseInsensitive) || path.endsWith(".png", Qt::CaseInsensitive)) {
-            imageList.append(path);
+    QFileInfo fileInfo(path);
+    if (fileInfo.isFile()) {
+        if (isImageFile(path)) {
+            imageList.append(fileInfo.absoluteFilePath());
+        }
+    } else {
+        QDir dir(path);
+        dir.setFilter(QDir::Files);
+        auto files = dir.entryInfoList().toVector();
+        for (const QFileInfo& finfo: files) {
+            QString path = finfo.absoluteFilePath();
+            if (isImageFile(path)) {
+                imageList.append(path);
+            }
         }
     }
 }
@@ -45,9 +51,10 @@ void LocalDirIterator::nextImage() {
 }
 
 void LocalDirIterator::previousImage() {
-    position--;
-    if (position == -1) {
-        position = imageList.length() - 1;
+    if (position == 0) {
+        position = imageList.length() -1;
+    } else {
+        position--;
     }
     emit currentFilenameChanged();
 }
@@ -55,4 +62,9 @@ void LocalDirIterator::previousImage() {
 QUrl LocalDirIterator::currentFilename() const {
     if (empty()) return QUrl("qrc:/images/noimage.jpg");
     return QUrl("file:" + imageList[position]);
+}
+
+
+ bool LocalDirIterator::isImageFile(const QString& path) {
+    return (path.endsWith(".jpg", Qt::CaseInsensitive) || path.endsWith(".png", Qt::CaseInsensitive));
 }

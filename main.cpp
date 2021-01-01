@@ -37,11 +37,14 @@ int main(int argc, char *argv[])
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
+
+    // build LocalDirIterator with the command-line argument
     QString path(QDir::currentPath());
     if (argc == 2) {
         path = argv[1];
     }
     LocalDirIterator dirIterator(&app, path);
+
     engine.rootContext()->setContextProperty("localDirIterator", &dirIterator);
     engine.load(url);
 

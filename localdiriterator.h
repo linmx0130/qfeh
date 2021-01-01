@@ -43,6 +43,7 @@ signals:
 private:
     QVector<QString> imageList;
     unsigned int position;
+    static bool isImageFile(const QString&);
 };
 
 #endif // LOCALDIRITERATOR_H
