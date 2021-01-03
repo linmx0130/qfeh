@@ -16,11 +16,12 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+#include <QDir>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "localdiriterator.h"
-#include <QDir>
+#include "imagehistogrammodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -46,6 +47,11 @@ int main(int argc, char *argv[])
     LocalDirIterator dirIterator(&app, path);
 
     engine.rootContext()->setContextProperty("localDirIterator", &dirIterator);
+
+    // histogram model type
+
+    qmlRegisterType<ImageHistogramChannelModel>("me.mengxiaolin.qfeh.ImageHistogramChannelModel", 0, 1, "ImageHistogramChannelModel");
+    qmlRegisterType<ImageHistogramModel>("me.mengxiaolin.qfeh.ImageHistogramModel", 0, 1, "ImageHistogramModel");
     engine.load(url);
 
     return app.exec();

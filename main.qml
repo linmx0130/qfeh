@@ -53,6 +53,9 @@ ApplicationWindow {
             }
         }
     }
+    HistogramWindow {
+        filename: image.source
+    }
 
     Window {
         id: helpDialog

@@ -14,10 +14,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 COMPONENTS Core Quick REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickControls2 REQUIRED)
 
+set(IMAGE_HISTOGRAM_MODEL
+        imagehistogrammodel.cpp
+        imagehistogrammodel.h
+    )
 set(PROJECT_SOURCES
         main.cpp
         localdiriterator.cpp
         localdiriterator.h
+        ${IMAGE_HISTOGRAM_MODEL}
         qml.qrc
         assets.qrc
 )
