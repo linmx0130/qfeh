@@ -11,20 +11,25 @@ Window {
     visible: true
     title: qsTr("Histogram")
     flags: "Tool"
+    width: 300
+    height: 300
 
     ImageHistogramModel {
         id: histModel
-        filename: parent.filename
-        onFilenameChanged: {
+        filename: histogramWindow.filename
+        onHistogramChanged: {
             histCanvas.requestPaint()
         }
+    }
+    onFilenameChanged: {
+        console.log("Filename received: ", filename);
     }
 
     Canvas {
         id: histCanvas
         anchors.fill: parent
-        width: 320
-        height: 320
+        width: 300
+        height: 300
         onPaint: {
             var ctx = getContext("2d")
             ctx.fillStyle="black"
@@ -42,7 +47,7 @@ Window {
                 ctx.moveTo(0, 300);
                 ctx.fillStyle=allChannel.displayColor
                 for (i=0;i<256;++i) {
-                    var y = Math.max(300 - Math.log(1 + allChannel.get(i) / maxVal) * 300, 0)
+                    var y = Math.max(300 - allChannel.get(i) / maxVal * 270, 0);
                     ctx.fillRect(i, y, 2, 300);
                 }
             }

@@ -44,8 +44,8 @@ private:
 class ImageHistogramModel : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QUrl filename READ filename WRITE setFilename NOTIFY filenameChanged)
-    Q_PROPERTY(int channelCount READ channelCount NOTIFY filenameChanged)
+    Q_PROPERTY(QUrl filename READ filename WRITE setFilename NOTIFY histogramChanged)
+    Q_PROPERTY(int channelCount READ channelCount NOTIFY histogramChanged)
 public:
 
     ImageHistogramModel(QObject *parent=0, const QUrl& filename=QUrl(""));
@@ -59,10 +59,11 @@ public:
 public slots:
     void setFilename(const QUrl& filename);
 signals:
-    void filenameChanged();
+    void histogramChanged();
 private:
     QUrl mFilename;
     QVector<ImageHistogramChannelModel> mChannels;
+    void recomputeHistogram();
 };
 
 #endif // IMAGEHISTOGRAMMODEL_H

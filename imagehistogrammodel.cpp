@@ -24,6 +24,10 @@ void ImageHistogramModel::setFilename(const QUrl &filename)
         return;
     }
     mFilename = filename.path();
+    recomputeHistogram();
+}
+
+void ImageHistogramModel::recomputeHistogram() {
     QImage img(mFilename.toString());
     QVector<QString> channelName = QVector<QString> {"All", "Red", "Green", "Blue"};
     QVector<QColor> displayColor = QVector<QColor> {
@@ -53,7 +57,7 @@ void ImageHistogramModel::setFilename(const QUrl &filename)
     }
     qDebug("Size %d x %d\n", img.height(), img.width());
 
-    emit filenameChanged();
+    emit histogramChanged();
 }
 
 
