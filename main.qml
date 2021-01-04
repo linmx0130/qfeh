@@ -20,13 +20,22 @@ import QtQuick
 import QtQuick.Window
 import QtQuick.Controls
 
+
 ApplicationWindow {
     width: 640
     height: 480
     visible: true
     title: qsTr("qfeh")
+    id: root
     background: Rectangle {
         color: "gray"
+    }
+
+    function showHistogramWindow() {
+        var comp = Qt.createComponent("HistogramWindow.qml")
+        var win = comp.createObject(root)
+        win.filename = image.source
+        win.show()
     }
 
     Image {
@@ -50,11 +59,11 @@ ApplicationWindow {
                 case Qt.Key_H:
                     helpDialog.show()
                     break
+                case Qt.Key_I:
+                    showHistogramWindow()
+                    break
             }
         }
-    }
-    HistogramWindow {
-        filename: image.source
     }
 
     Window {
