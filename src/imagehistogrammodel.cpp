@@ -1,3 +1,22 @@
+/*
+    imagehistogrammodel.cpp: the implementation of histogram data model
+    Copyright (C) 2021 Mengxiao Lin <linmx0130@gmail.com>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+
 #include "imagehistogrammodel.h"
 #include <QImage>
 #include <QFileInfo>
@@ -29,7 +48,7 @@ void ImageHistogramModel::setFilename(const QUrl &filename)
 
 void ImageHistogramModel::recomputeHistogram() {
     QImage img(mFilename.toString());
-    QVector<QString> channelName = QVector<QString> {"All", "Red", "Green", "Blue"};
+    QVector<QString> channelName = QVector<QString> {"Lightness", "Red", "Green", "Blue"};
     QVector<QColor> displayColor = QVector<QColor> {
             QColorConstants::White,
             QColorConstants::Red,
@@ -55,7 +74,6 @@ void ImageHistogramModel::recomputeHistogram() {
         }
         mChannels.push_back(ImageHistogramChannelModel(this, channelName[i], displayColor[i], histogram));
     }
-    qDebug("Size %d x %d\n", img.height(), img.width());
 
     emit histogramChanged();
 }

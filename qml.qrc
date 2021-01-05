@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>HistogramWindow.qml</file>
+        <file alias="HistogramWindow.qml">qml/HistogramWindow.qml</file>
+        <file alias="HistogramCanvas.qml">qml/HistogramCanvas.qml</file>
+        <file alias="main.qml">qml/main.qml</file>
     </qresource>
 </RCC>

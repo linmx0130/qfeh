@@ -21,6 +21,7 @@ import QtQuick.Window
 import QtQuick.Controls
 
 
+
 ApplicationWindow {
     width: 640
     height: 480
@@ -31,11 +32,17 @@ ApplicationWindow {
         color: "gray"
     }
 
+    property variant histWindow: null
+
     function showHistogramWindow() {
+        if (histWindow !== null) {
+            histWindow.close()
+        }
+
         var comp = Qt.createComponent("HistogramWindow.qml")
-        var win = comp.createObject(root)
-        win.filename = image.source
-        win.show()
+        histWindow = comp.createObject(root)
+        histWindow.filename = image.source
+        histWindow.show()
     }
 
     Image {
@@ -70,7 +77,7 @@ ApplicationWindow {
         id: helpDialog
         visible: false
         title: qsTr("Help")
-        flags: "Tool"
+        flags: "Dialog"
         width: content.width + 32
         height: content.height + 32
 

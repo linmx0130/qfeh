@@ -15,13 +15,13 @@ find_package(QT NAMES Qt6 COMPONENTS Core Quick REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickControls2 REQUIRED)
 
 set(IMAGE_HISTOGRAM_MODEL
-        imagehistogrammodel.cpp
-        imagehistogrammodel.h
+        src/imagehistogrammodel.cpp
+        src/imagehistogrammodel.h
     )
 set(PROJECT_SOURCES
-        main.cpp
-        localdiriterator.cpp
-        localdiriterator.h
+        src/main.cpp
+        src/localdiriterator.cpp
+        src/localdiriterator.h
         ${IMAGE_HISTOGRAM_MODEL}
         qml.qrc
         assets.qrc
