@@ -38,13 +38,19 @@ Window {
     ImageHistogramModel {
         id: histogramModel
         filename: histogramWindow.filename
-
+        onHistogramChanged: {
+            for (var i =0;i<4; ++i) {
+                canvasRepeater.itemAt(i).requestPaint();
+            }
+        }
     }
+
     Grid {
         rows: 2
         columns: 2
         spacing: 0
         Repeater {
+            id: canvasRepeater
             model: 4
             HistogramCanvas {
                 histModel: histogramModel.channelCount > index ? histogramModel.data(index) : null;

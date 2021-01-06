@@ -35,12 +35,10 @@ ApplicationWindow {
     property variant histWindow: null
 
     function showHistogramWindow() {
-        if (histWindow !== null) {
-            histWindow.close()
+        if (histWindow === null) {
+            var comp = Qt.createComponent("HistogramWindow.qml")
+            histWindow = comp.createObject(root)
         }
-
-        var comp = Qt.createComponent("HistogramWindow.qml")
-        histWindow = comp.createObject(root)
         histWindow.filename = image.source
         histWindow.show()
     }
@@ -71,6 +69,11 @@ ApplicationWindow {
                     break
             }
         }
+        onSourceChanged: {
+            if (histWindow !== null) {
+                histWindow.close()
+            }
+        }
     }
 
     Window {
@@ -93,7 +96,7 @@ ApplicationWindow {
             }
 
             Label {
-                text: "P - Previous Image \nN - Next Image\nQ - Quit"
+                text: "P - Previous Image \nN - Next Image\nI - Open Histogram View\nQ - Quit"
                 font.family: "Sans Serif"
                 font.pixelSize: 14
             }
